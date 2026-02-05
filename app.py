@@ -124,7 +124,19 @@ def fix_messages(messages):
 @st.fragment
 def generate_llm_response():
     if st.session_state.llm_model != "Local":
-        model = st.session_state.llm_model.replace(" ", "").lower() + "/" + st.session_state["model_name"]
+        provider = st.session_state.llm_model.replace(" ", "").lower()
+        
+        # 把自訂 provider 名轉成 litellm 內建 provider
+        provider_map = {
+            "nim": "nvidia",       # NIM -> litellm 的 nvidia provider
+            "kimi": "openai",      # 如經 OpenAI-compatible endpoint，可暫時當 openai
+            "deepseek": "deepseek",
+            "claude": "anthropic",
+            "gemini": "gemini",
+        }
+        
+        litellm_provider = provider_map.get(provider, provider)
+        model = f"{litellm_provider}/{st.session_state['model_name']}"
         extra_args = {}
     else:
         model = st.session_state["model_name"]

@@ -29,7 +29,7 @@ MODEL_SETTINGS = {
         "OPENAI_API_BASE": "https://openrouter.ai/api/v1",
     },
     "NIM": {
-        "OPENAI_MODEL_NAME": "nvidia/nemotron-4-340b-instruct",
+        "OPENAI_MODEL_NAME": "nemotron-4-340b-instruct",
         "OPENAI_API_BASE": "https://integrate.api.nvidia.com/v1",
     },
     "Kimi": {
