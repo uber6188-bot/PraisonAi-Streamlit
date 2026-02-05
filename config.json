@@ -1,4 +1,4 @@
 {
-    "tts_personality": "en-GB-SoniaNeural",
-    "llm_provider": "OpenAi"
+    "tts_personality": "zh-HK-HiuGaaiNeural",
+    "llm_provider": "Local"
 }

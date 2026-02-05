@@ -13,7 +13,7 @@ MODEL_SETTINGS = {
         "OPENAI_API_BASE": "http://localhost:8001/v12",
     },
     "LM Studio": {
-        "OPENAI_MODEL_NAME": "openai/dolphin",
+        "OPENAI_MODEL_NAME": "qwen/qwen3-vl-4b",
         "OPENAI_API_BASE": "http://localhost:1234/v1",
     },
     "Mistral": {
@@ -27,6 +27,14 @@ MODEL_SETTINGS = {
     "OpenRouter": {
         "OPENAI_MODEL_NAME": "anthropic/claude-3.5-sonnet:beta",
         "OPENAI_API_BASE": "https://openrouter.ai/api/v1",
+    },
+    "NIM": {
+        "OPENAI_MODEL_NAME": "nvidia/nemotron-4-340b-instruct",
+        "OPENAI_API_BASE": "https://integrate.api.nvidia.com/v1",
+    },
+    "Kimi": {
+        "OPENAI_MODEL_NAME": "moonshot-v1-8k",
+        "OPENAI_API_BASE": "https://api.moonshot.cn/v1",
     }
 }
 

@@ -20,7 +20,7 @@ initialize_session_state()
 uploaded_file_placeholder = st.empty()
 tool_dialog = st.empty()
 
-@st.experimental_fragment
+@st.fragment
 def update_model():
     llm_provider = st.session_state.llm_model if st.session_state.llm_model != "Local" else st.session_state.local_model
     api_key = get_api_key(llm_provider)
@@ -121,7 +121,7 @@ def fix_messages(messages):
     
     return fixed_messages
 
-@st.experimental_fragment
+@st.fragment
 def generate_llm_response():
     if st.session_state.llm_model != "Local":
         model = st.session_state.llm_model.replace(" ", "").lower() + "/" + st.session_state["model_name"]
@@ -149,7 +149,7 @@ def generate_llm_response():
             response_placeholder.write(response)
     return response
 
-@st.experimental_dialog("Modify Agents", width="large")
+@st.dialog("Modify Agents", width="large")
 def edit_agent_dialog():
     with st.form("edit_agent_form", border=False):
         agent = st.session_state.get("agent", "")
@@ -191,7 +191,7 @@ def get_updated_task(role_name, task_name, task_data):
 def get_all_tools():
     return sorted(set(AVAILABLE_TOOLS + list(load_tools_from_file(TOOLS_FILE).keys())))
 
-@st.experimental_dialog("Modify Tools", width="large")
+@st.dialog("Modify Tools", width="large")
 def create_tool_dialog():
     with open(TOOLS_FILE, 'r') as file:
         tool_code = file.read()
@@ -208,7 +208,7 @@ def append_tool_to_file(tool_code):
     with open(TOOLS_FILE, 'a') as file:
         file.write(f"\n# {tool_code.split('class ')[1].split('(')[0].strip()}\n{tool_code}\n")
 
-@st.experimental_fragment
+@st.fragment
 def display_llm_settings():
     with st.expander("LLM Settings", expanded=True):
         col1, col2 = st.columns([2, 1])
@@ -248,7 +248,7 @@ def display_llm_settings():
         if st.button(":heavy_multiplication_x: Clear Chat"):
             clear_conversation_history()
 
-@st.experimental_fragment
+@st.fragment
 def output_tts(response):
     if st.session_state.enable_tts:
         
@@ -356,7 +356,7 @@ def display_documents_in_sidebar():
                 if st.button(":microphone: Modify Transcript"):
                     show_document_content_dialog()
 
-@st.experimental_dialog("Modify Transcript", width="large")
+@st.dialog("Modify Transcript", width="large")
 def show_document_content_dialog():
     if "selected_document" in st.session_state:
         document = st.session_state.selected_document

@@ -155,12 +155,12 @@ def load_conversation_history():
             return json.load(file)
     return []
 
-@st.experimental_fragment
+@st.fragment
 def save_conversation_history(messages):
     with open(CONVERSATION_HISTORY_FILE, 'w') as file:
         json.dump(messages, file, indent=4)
 
-@st.experimental_fragment
+@st.fragment
 def clear_conversation_history():
     with open(CONVERSATION_HISTORY_FILE, 'w') as file:
         json.dump([], file, indent=4)
