@@ -35,6 +35,18 @@ MODEL_SETTINGS = {
     "Kimi": {
         "OPENAI_MODEL_NAME": "moonshot-v1-8k",
         "OPENAI_API_BASE": "https://api.moonshot.cn/v1",
+    },
+    "DeepSeek": {
+        "OPENAI_MODEL_NAME": "deepseek-chat",
+        "OPENAI_API_BASE": "https://api.deepseek.com/v1",
+    },
+    "Claude": {
+        "OPENAI_MODEL_NAME": "claude-3-5-sonnet-20241022",
+        "OPENAI_API_BASE": "https://api.anthropic.com",
+    },
+    "Gemini": {
+        "OPENAI_MODEL_NAME": "gemini-1.5-pro",
+        "OPENAI_API_BASE": "https://generativelanguage.googleapis.com/v1beta",
     }
 }
 
