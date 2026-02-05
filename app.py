@@ -212,22 +212,44 @@ def append_tool_to_file(tool_code):
 def display_llm_settings():
     with st.expander("LLM Settings", expanded=True):
         col1, col2 = st.columns([2, 1])
-        llm_options = ["OpenAi", "OpenRouter", "Mistral", "Groq", "Local"]
+        
+        # 用 MODEL_SETTINGS 的所有 key 做 provider 選項
+        llm_options = sorted(MODEL_SETTINGS.keys())
 
         llm_selection_placeholder = col1.empty()
         local_model_placeholder = col2.empty()
 
-        llm_selection_placeholder.selectbox("Select LLM Provider", options=llm_options, key='llm_model', on_change=update_model)
-        if st.session_state.llm_model == "Local":
-            local_providers = sorted([provider for provider in MODEL_SETTINGS.keys() if is_local_model(provider)])
-            model_name = os.getenv("OPENAI_MODEL_NAME")
-            default_provider = next((key for key, value in MODEL_SETTINGS.items() if value["OPENAI_MODEL_NAME"] == model_name), local_providers[0])
-            st.session_state.local_model = default_provider
-            local_model_placeholder.selectbox("Provider", options=local_providers, key='local_model', on_change=update_model)
+        llm_selection_placeholder.selectbox(
+            "Select LLM Provider",
+            options=llm_options,
+            key="llm_model",
+            on_change=update_model,
+        )
 
-        st.text_input("API Base", key='api_base', on_change=update_model_settings_field)
-        st.text_input("Model", key='model_name', on_change=update_model_settings_field)
-        st.text_input("API Key", key='api_key', type='password', on_change=update_model_settings_field)
+        # 只喺「Local」模式先顯示第二層 local provider 選單
+        if st.session_state.llm_model == "Local":
+            local_providers = sorted(
+                [provider for provider in MODEL_SETTINGS.keys() if is_local_model(provider)]
+            )
+            model_name = os.getenv("OPENAI_MODEL_NAME")
+            default_provider = next(
+                (key for key, value in MODEL_SETTINGS.items() if value["OPENAI_MODEL_NAME"] == model_name),
+                local_providers[0],
+            )
+            st.session_state.local_model = default_provider
+            local_model_placeholder.selectbox(
+                "Provider",
+                options=local_providers,
+                key="local_model",
+                on_change=update_model,
+            )
+        else:
+            # 非 Local provider 時，用自身作為 local_model，避免後面 update_model 出錯
+            st.session_state.local_model = st.session_state.llm_model
+
+        st.text_input("API Base", key="api_base", on_change=update_model_settings_field)
+        st.text_input("Model", key="model_name", on_change=update_model_settings_field)
+        st.text_input("API Key", key="api_key", type='password', on_change=update_model_settings_field)
 
         ttsCol1, ttsCol2 = st.columns(2)
         with ttsCol1:
